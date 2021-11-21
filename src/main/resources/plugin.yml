@@ -1,0 +1,6 @@
+name: SuperClaim
+version: '${project.version}'
+main: me.thelore.superclaim.SuperClaim
+api-version: 1.17
+authors: [ TheLore ]
+description: Claim plugin
