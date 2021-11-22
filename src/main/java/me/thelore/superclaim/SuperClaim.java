@@ -32,6 +32,6 @@ public final class SuperClaim extends JavaPlugin {
     }
 
     private void loadTasks() {
-        new SaveTask().runTaskTimer(this, 20 * 60 * 5, 20 * 60 * 5);
+        new SaveTask().runTaskTimerAsynchronously(this, 20 * 60 * 5, 20 * 60 * 5);
     }
 }

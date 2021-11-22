@@ -1,5 +1,6 @@
 package me.thelore.superclaim.storage.impl;
 
+import com.sun.source.tree.UsesTree;
 import me.thelore.superclaim.claim.Claim;
 import me.thelore.superclaim.claim.ClaimIdentifier;
 import me.thelore.superclaim.claim.Territory;
@@ -22,6 +23,8 @@ public class ClaimStorage extends Configuration {
 
         String claimId = claim.getClaimIdentifier().getId();
         String basePath = "claims." + claimId;
+
+        fileConfiguration.set(basePath, null);
 
         Arrays.stream(ClaimPermission.values()).forEach(c -> {
             fileConfiguration.set(basePath + "." + c.name(), claim.getPlayersWithPermission(c));
