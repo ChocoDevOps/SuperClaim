@@ -2,6 +2,7 @@ package me.thelore.superclaim.ui.component;
 
 import me.thelore.superclaim.ui.Menu;
 import me.thelore.superclaim.ui.listener.ButtonListener;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -22,14 +23,22 @@ public class ItemButton extends InventoryComponent {
         super(menu, slot);
 
         this.material = material;
-        this.title = title;
+        this.title = ChatColor.translateAlternateColorCodes('&', title);
         this.description = new ArrayList<>();
 
-        this.description.addAll(List.of(description));
+        for(String d : description) {
+            this.description.add(ChatColor.translateAlternateColorCodes('&', d));
+        }
     }
 
     public void setButtonListener(ButtonListener buttonListener) {
         this.buttonListener = buttonListener;
+    }
+
+    public void propagateClick() {
+        if(buttonListener != null) {
+            buttonListener.onClick();
+        }
     }
 
     public Material getMaterial() {

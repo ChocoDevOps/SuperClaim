@@ -25,7 +25,7 @@ public class InventoryMenu implements Menu {
             return;
         }
 
-        addComponent(component);
+        componentList.add(component);
     }
 
     @Override

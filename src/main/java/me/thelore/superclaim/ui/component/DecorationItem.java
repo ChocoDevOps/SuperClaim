@@ -1,6 +1,7 @@
 package me.thelore.superclaim.ui.component;
 
 import me.thelore.superclaim.ui.Menu;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -14,7 +15,7 @@ public class DecorationItem extends InventoryComponent {
     public DecorationItem(Menu menu, int slot, Material material, String title) {
         super(menu, slot);
         this.material = material;
-        this.title = title;
+        this.title = ChatColor.translateAlternateColorCodes('&', title);
     }
 
     public Material getMaterial() {
