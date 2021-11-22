@@ -18,6 +18,12 @@ public class DecorationItem extends InventoryComponent {
         this.title = ChatColor.translateAlternateColorCodes('&', title);
     }
 
+    public DecorationItem(Menu menu, int slot, ItemStack itemStack) {
+        super(menu, slot);
+        this.material = itemStack.getType();
+        this.title = ChatColor.translateAlternateColorCodes('&', itemStack.getItemMeta().getDisplayName());
+    }
+
     public Material getMaterial() {
         return material;
     }

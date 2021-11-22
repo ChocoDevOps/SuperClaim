@@ -31,6 +31,19 @@ public class ItemButton extends InventoryComponent {
         }
     }
 
+    public ItemButton(Menu menu, int slot, ItemStack itemStack) {
+        super(menu, slot);
+
+        this.material = itemStack.getType();
+        this.title = ChatColor.translateAlternateColorCodes('&', itemStack.getItemMeta().getDisplayName());
+        this.description = itemStack.getItemMeta().getLore();
+
+        Objects.requireNonNull(description, "Description is required");
+        for(String d : description) {
+            this.description.add(ChatColor.translateAlternateColorCodes('&', d));
+        }
+    }
+
     public void setButtonListener(ButtonListener buttonListener) {
         this.buttonListener = buttonListener;
     }
