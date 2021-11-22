@@ -1,6 +1,5 @@
 package me.thelore.superclaim.storage.impl;
 
-import me.thelore.superclaim.SuperClaim;
 import me.thelore.superclaim.claim.Claim;
 import me.thelore.superclaim.claim.ClaimIdentifier;
 import me.thelore.superclaim.claim.Territory;
@@ -12,11 +11,6 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.*;
-
-import static java.util.Comparator.comparing;
-import static java.util.Comparator.comparingInt;
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toCollection;
 
 public class ClaimStorage extends Configuration {
     public ClaimStorage() {
@@ -42,6 +36,7 @@ public class ClaimStorage extends Configuration {
 
     public List<Claim> fetchClaims() {
         List<Claim> toReturn = new ArrayList<>();
+
         for (String claimString : getConfiguration().getConfigurationSection("claims").getKeys(false)) {
             String basePath = "claims." + claimString;
 
@@ -58,21 +53,22 @@ public class ClaimStorage extends Configuration {
 
             Map<String, List<ClaimPermission>> claimPermission = new HashMap<>();
             for (String permission : getConfiguration().getConfigurationSection(basePath).getKeys(false)) {
-                if (!permission.equalsIgnoreCase("meta")) {
-                    String permissionPath = getConfiguration().getString(basePath + "." + permission);
-                    for (String playerName : getConfiguration().getStringList(permissionPath)) {
-                        if (!claimPermission.containsKey(playerName)) {
-                            claimPermission.put(playerName, Arrays.asList(ClaimPermission.valueOf(permission)));
-                        } else {
-                            claimPermission.get(playerName).add(ClaimPermission.valueOf(permission));
-                        }
+                if (permission.equalsIgnoreCase("meta")) {
+                    continue;
+                }
+
+                String permissionPath = getConfiguration().getString(basePath + "." + permission);
+                for (String playerName : getConfiguration().getStringList(permissionPath)) {
+                    if (!claimPermission.containsKey(playerName)) {
+                        claimPermission.put(playerName, Arrays.asList(ClaimPermission.valueOf(permission)));
+                    } else {
+                        claimPermission.get(playerName).add(ClaimPermission.valueOf(permission));
                     }
                 }
             }
 
             Claim claim = new Claim(claimIdentifier, territory);
             for (String playerName : claimPermission.keySet()) {
-                System.out.println(claimPermission.get(playerName).getClass());
                 ClaimPlayer claimPlayer = new ClaimPlayer(playerName, claimPermission.get(playerName));
                 claim.addPlayer(claimPlayer);
             }

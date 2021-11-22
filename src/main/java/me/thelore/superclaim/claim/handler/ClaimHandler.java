@@ -36,11 +36,7 @@ public class ClaimHandler {
     }
 
     public Claim getClaim(String claimId) {
-        List<Claim> temp = claimList.stream().filter(c -> c.getClaimIdentifier().getId().equals(claimId)).collect(Collectors.toList());
-        if(temp.size() > 0) {
-            return temp.get(0);
-        }
-        return null;
+        return claimList.stream().filter(c -> c.getClaimIdentifier().getId().equals(claimId)).findAny().orElse(null);
     }
 
     public void saveData() {

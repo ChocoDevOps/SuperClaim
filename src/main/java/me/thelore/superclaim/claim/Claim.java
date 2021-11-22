@@ -33,14 +33,7 @@ public class Claim {
     }
 
     public ClaimPlayer getClaimPlayer(String name) {
-        List<ClaimPlayer> temp = claimPlayerList.stream().filter(c -> c.getName().equals(name))
-                .collect(Collectors.toList());
-
-        if(temp.size() != 0) {
-            return temp.get(0);
-        }
-
-        return null;
+        return claimPlayerList.stream().filter(c -> c.getName().equals(name)).findAny().orElse(null);
     }
 
     public List<String> getPlayersWithPermission(ClaimPermission claimPermission) {
