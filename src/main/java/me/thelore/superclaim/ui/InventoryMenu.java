@@ -6,10 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryMenu implements Menu {
+    private final int id;
+
+    private int size;
+
     private final String title;
     private final List<InventoryComponent> componentList;
 
-    public InventoryMenu(String title) {
+    public InventoryMenu(int id, String title) {
+        this.id = id;
+
         this.title = title;
         this.componentList = new ArrayList<>();
     }
@@ -48,4 +54,31 @@ public class InventoryMenu implements Menu {
     public String getTitle() {
         return title;
     }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public int getSize() {
+        return size;
+    }
+
+    @Override
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    @Override
+    public List<Integer> getFreeSlots() {
+        List<Integer> toReturn = new ArrayList<>();
+        for(int i = 0; i < getSize(); i++) {
+            if(getComponent(i) == null) {
+                toReturn.add(i);
+            }
+        }
+        return toReturn;
+    }
+
 }

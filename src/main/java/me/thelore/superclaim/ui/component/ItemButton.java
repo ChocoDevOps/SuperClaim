@@ -4,6 +4,7 @@ import me.thelore.superclaim.ui.Menu;
 import me.thelore.superclaim.ui.listener.ButtonListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -48,9 +49,9 @@ public class ItemButton extends InventoryComponent {
         this.buttonListener = buttonListener;
     }
 
-    public void propagateClick() {
+    public void propagateClick(Player whoClicked) {
         if(buttonListener != null) {
-            buttonListener.onClick();
+            buttonListener.onClick(whoClicked);
         }
     }
 

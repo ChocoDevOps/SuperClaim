@@ -2,10 +2,12 @@ package me.thelore.superclaim.claim.handler;
 
 import me.thelore.superclaim.claim.Claim;
 import me.thelore.superclaim.storage.impl.ClaimStorage;
+import org.bukkit.entity.Player;
 
 import java.lang.management.ClassLoadingMXBean;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ClaimHandler {
@@ -37,6 +39,10 @@ public class ClaimHandler {
 
     public Claim getClaim(String claimId) {
         return claimList.stream().filter(c -> c.getClaimIdentifier().getId().equals(claimId)).findAny().orElse(null);
+    }
+
+    public int getClaims(String name) {
+        return (int) claimList.stream().filter(c -> c.getClaimIdentifier().getPlayerName().equals(name)).count();
     }
 
     public void saveData() {

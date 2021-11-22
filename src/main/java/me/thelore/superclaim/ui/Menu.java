@@ -10,4 +10,8 @@ public interface Menu {
     void removeComponent(InventoryComponent component);
     InventoryComponent getComponent(int slot);
     String getTitle();
+    int getId();
+    int getSize();
+    void setSize(int size);
+    List<Integer> getFreeSlots();
 }

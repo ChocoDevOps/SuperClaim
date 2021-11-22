@@ -4,3 +4,7 @@ main: me.thelore.superclaim.SuperClaim
 api-version: 1.17
 authors: [ TheLore ]
 description: Claim plugin
+commands:
+  claim:
+    usage: /claim
+    description: Claim an area

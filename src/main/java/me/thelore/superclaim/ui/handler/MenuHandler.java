@@ -1,6 +1,7 @@
 package me.thelore.superclaim.ui.handler;
 
 import me.thelore.superclaim.SuperClaim;
+import me.thelore.superclaim.task.AsyncTask;
 import me.thelore.superclaim.ui.InventoryMenu;
 import me.thelore.superclaim.ui.Menu;
 import me.thelore.superclaim.ui.component.InventoryComponent;
@@ -31,17 +32,33 @@ public class MenuHandler implements Listener {
     }
 
     public void openMenu(Player player, Menu menu) {
+        long start = System.currentTimeMillis();
         String title = menu.getTitle();
         int size = calculateSize(menu);
 
+        menu.setSize(size);
+
         Inventory inventory = Bukkit.createInventory(null, size == 0 ? 9 : size, title);
 
-        for(InventoryComponent components : menu.getComponents()) {
-            inventory.setItem(components.getSlot(), components.getItemStack());
-        }
+        new AsyncTask(() -> {
+            for(InventoryComponent components : menu.getComponents()) {
+                inventory.setItem(components.getSlot(), components.getItemStack());
+            }
+        });
 
         player.openInventory(inventory);
         openedMenuList.put(player.getUniqueId(), menu);
+        long end = System.currentTimeMillis();
+
+        System.out.println(end - start);
+    }
+
+    public void openMenu(Player player, int id) {
+        openMenu(player, getMenuById(id));
+    }
+
+    public Menu getMenuById(int id) {
+        return menuList.stream().filter(m -> m.getId() == id).findAny().orElse(null);
     }
 
     private int calculateSize(Menu menu) {
@@ -65,7 +82,7 @@ public class MenuHandler implements Listener {
             event.setCancelled(true);
 
             if(component instanceof ItemButton) {
-                ((ItemButton) component).propagateClick();
+                ((ItemButton) component).propagateClick((Player) event.getWhoClicked());
             }
         }
     }

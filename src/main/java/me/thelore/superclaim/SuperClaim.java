@@ -2,8 +2,10 @@ package me.thelore.superclaim;
 
 import lombok.Getter;
 import me.thelore.superclaim.claim.handler.ClaimHandler;
+import me.thelore.superclaim.command.ClaimCommand;
 import me.thelore.superclaim.task.SaveTask;
 import me.thelore.superclaim.ui.handler.MenuHandler;
+import me.thelore.superclaim.utill.AreaSelector;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SuperClaim extends JavaPlugin {
@@ -15,6 +17,8 @@ public final class SuperClaim extends JavaPlugin {
     private ClaimHandler claimHandler;
     @Getter
     private MenuHandler menuHandler;
+    @Getter
+    private AreaSelector areaSelector;
 
     @Override
     public void onEnable() {
@@ -22,9 +26,11 @@ public final class SuperClaim extends JavaPlugin {
 
         claimHandler = new ClaimHandler();
         menuHandler = new MenuHandler();
+        areaSelector = new AreaSelector();
 
         claimHandler.loadData();
         loadTasks();
+        registerCommands();
     }
 
     public void onDisable() {
@@ -33,5 +39,9 @@ public final class SuperClaim extends JavaPlugin {
 
     private void loadTasks() {
         new SaveTask().runTaskTimerAsynchronously(this, 20 * 60 * 5, 20 * 60 * 5);
+    }
+
+    private void registerCommands() {
+        getCommand("claim").setExecutor(new ClaimCommand());
     }
 }
