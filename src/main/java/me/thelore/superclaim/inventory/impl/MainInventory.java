@@ -13,8 +13,8 @@ import me.thelore.superclaim.ui.component.DecorationItem;
 import me.thelore.superclaim.ui.component.ItemButton;
 import me.thelore.superclaim.ui.handler.MenuHandler;
 import me.thelore.superclaim.ui.listener.ButtonListener;
-import me.thelore.superclaim.utill.AreaSelector;
-import me.thelore.superclaim.utill.SelectorCallback;
+import me.thelore.superclaim.util.AreaSelector;
+import me.thelore.superclaim.util.SelectorCallback;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 

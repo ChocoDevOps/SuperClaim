@@ -1,4 +1,4 @@
-package me.thelore.superclaim.utill;
+package me.thelore.superclaim.util;
 
 import me.thelore.superclaim.SuperClaim;
 import me.thelore.superclaim.claim.Territory;

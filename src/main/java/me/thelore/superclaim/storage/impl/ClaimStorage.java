@@ -1,13 +1,12 @@
 package me.thelore.superclaim.storage.impl;
 
-import com.sun.source.tree.UsesTree;
 import me.thelore.superclaim.claim.Claim;
 import me.thelore.superclaim.claim.ClaimIdentifier;
 import me.thelore.superclaim.claim.Territory;
 import me.thelore.superclaim.claim.permission.ClaimPermission;
 import me.thelore.superclaim.claim.player.ClaimPlayer;
 import me.thelore.superclaim.storage.Configuration;
-import me.thelore.superclaim.utill.LocationUtil;
+import me.thelore.superclaim.util.LocationUtil;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 
