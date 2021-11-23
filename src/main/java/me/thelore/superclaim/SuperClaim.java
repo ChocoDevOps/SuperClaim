@@ -1,12 +1,18 @@
 package me.thelore.superclaim;
 
 import lombok.Getter;
+import me.thelore.superclaim.claim.Claim;
+import me.thelore.superclaim.claim.ClaimIdentifier;
+import me.thelore.superclaim.claim.Territory;
 import me.thelore.superclaim.claim.handler.ClaimHandler;
 import me.thelore.superclaim.command.ClaimCommand;
+import me.thelore.superclaim.inventory.InventorySwitch;
 import me.thelore.superclaim.task.SaveTask;
 import me.thelore.superclaim.ui.handler.MenuHandler;
 import me.thelore.superclaim.utill.AreaSelector;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Random;
 
 public final class SuperClaim extends JavaPlugin {
 
@@ -20,6 +26,9 @@ public final class SuperClaim extends JavaPlugin {
     @Getter
     private AreaSelector areaSelector;
 
+    @Getter
+    private InventorySwitch inventorySwitch;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -27,6 +36,8 @@ public final class SuperClaim extends JavaPlugin {
         claimHandler = new ClaimHandler();
         menuHandler = new MenuHandler();
         areaSelector = new AreaSelector();
+
+        inventorySwitch = new InventorySwitch();
 
         claimHandler.loadData();
         loadTasks();

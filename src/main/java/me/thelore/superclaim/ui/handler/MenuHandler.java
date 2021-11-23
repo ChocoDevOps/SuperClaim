@@ -32,7 +32,6 @@ public class MenuHandler implements Listener {
     }
 
     public void openMenu(Player player, Menu menu) {
-        long start = System.currentTimeMillis();
         String title = menu.getTitle();
         int size = calculateSize(menu);
 
@@ -48,9 +47,6 @@ public class MenuHandler implements Listener {
 
         player.openInventory(inventory);
         openedMenuList.put(player.getUniqueId(), menu);
-        long end = System.currentTimeMillis();
-
-        System.out.println(end - start);
     }
 
     public void openMenu(Player player, int id) {

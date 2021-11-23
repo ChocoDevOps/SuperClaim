@@ -2,6 +2,7 @@ package me.thelore.superclaim.utill;
 
 import me.thelore.superclaim.SuperClaim;
 import me.thelore.superclaim.claim.Territory;
+import me.thelore.superclaim.claim.handler.ClaimHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -17,6 +18,8 @@ import java.util.UUID;
 public class AreaSelector implements Listener {
     private final List<UUID> selecting;
 
+    private final ClaimHandler claimHandler;
+
     private SelectorCallback selectorCallback;
 
     private Location p1;
@@ -25,10 +28,12 @@ public class AreaSelector implements Listener {
     public AreaSelector() {
         selecting = new ArrayList<>();
 
+        claimHandler = SuperClaim.getInstance().getClaimHandler();
+
         Bukkit.getPluginManager().registerEvents(this, SuperClaim.getInstance());
     }
 
-    public void onDone(Player player, SelectorCallback selectorCallback) {
+    public void record(Player player, SelectorCallback selectorCallback) {
         this.selecting.add(player.getUniqueId());
         this.selectorCallback = selectorCallback;
     }
@@ -36,6 +41,8 @@ public class AreaSelector implements Listener {
     @EventHandler
     public void on(PlayerInteractEvent event) {
         if(selecting.contains(event.getPlayer().getUniqueId())) {
+            event.setCancelled(true);
+
             if(event.getAction() == Action.LEFT_CLICK_BLOCK) {
                 p1 = event.getClickedBlock().getLocation();
                 event.getPlayer().sendMessage("Punto 1 selezionato");
@@ -47,7 +54,20 @@ public class AreaSelector implements Listener {
             }
 
             if(p1 != null && p2 != null) {
-                Territory territory = new Territory(p1.getWorld().getName(), p1.getBlockX(), p1.getBlockY(), p1.getBlockZ(), p2.getBlockX(), p2.getBlockY(), p2.getBlockZ());
+                if(claimHandler.getClaim(p1) != null || claimHandler.getClaim(p2) != null) {
+                    selectorCallback.onError();
+                    return;
+                }
+
+                int xMin = Math.min(p1.getBlockX(), p2.getBlockX());
+                int yMin = Math.min(p1.getBlockY(), p2.getBlockY());
+                int zMin = Math.min(p1.getBlockZ(), p2.getBlockZ());
+
+                int xMax = Math.max(p1.getBlockX(), p2.getBlockX());
+                int yMax = Math.max(p1.getBlockY(), p2.getBlockY());
+                int zMax = Math.max(p1.getBlockZ(), p2.getBlockZ());
+
+                Territory territory = new Territory(p1.getWorld().getName(), xMin, yMin, zMin, xMax, yMax, zMax);
                 selectorCallback.onDone(territory);
                 selecting.remove(event.getPlayer().getUniqueId());
             }

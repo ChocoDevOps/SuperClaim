@@ -2,6 +2,7 @@ package me.thelore.superclaim.claim.handler;
 
 import me.thelore.superclaim.claim.Claim;
 import me.thelore.superclaim.storage.impl.ClaimStorage;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.lang.management.ClassLoadingMXBean;
@@ -19,13 +20,12 @@ public class ClaimHandler {
         this.claimList = new ArrayList<>();
     }
 
-    public boolean createClaim(Claim claim) {
-        if(getClaim(claim.getClaimIdentifier().getId()) != null) {
-            return false;
-        }
-
+    public void createClaim(Claim claim) {
         claimList.add(claim);
-        return true;
+    }
+
+    public Claim getClaim(Location location) {
+        return claimList.parallelStream().filter(c -> c.getTerritory().comprehend(location)).findAny().orElse(null);
     }
 
     public boolean removeClaim(Claim claim) {
