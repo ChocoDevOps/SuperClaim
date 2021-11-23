@@ -56,6 +56,7 @@ public class AreaSelector implements Listener {
             if(p1 != null && p2 != null) {
                 if(claimHandler.getClaim(p1) != null || claimHandler.getClaim(p2) != null) {
                     selectorCallback.onError();
+                    selecting.remove(event.getPlayer().getUniqueId());
                     return;
                 }
 
