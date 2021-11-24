@@ -28,6 +28,10 @@ public class ClaimHandler {
         return claimList.parallelStream().filter(c -> c.getTerritory().comprehend(location)).findAny().orElse(null);
     }
 
+    public Claim getClaim(String claimId) {
+        return claimList.stream().filter(c -> c.getClaimIdentifier().getId().equals(claimId)).findAny().orElse(null);
+    }
+
     public boolean removeClaim(Claim claim) {
         if(getClaim(claim.getClaimIdentifier().getId()) == null) {
             return false;
@@ -35,10 +39,6 @@ public class ClaimHandler {
 
         claimList.remove(claim);
         return true;
-    }
-
-    public Claim getClaim(String claimId) {
-        return claimList.stream().filter(c -> c.getClaimIdentifier().getId().equals(claimId)).findAny().orElse(null);
     }
 
     public int getClaims(String name) {
