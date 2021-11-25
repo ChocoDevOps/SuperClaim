@@ -1,17 +1,19 @@
 package me.thelore.superclaim.command;
 
+import com.sun.tools.javac.Main;
 import me.thelore.superclaim.SuperClaim;
-import me.thelore.superclaim.inventory.InventorySwitch;
-import me.thelore.superclaim.inventory.InventoryType;
+import me.thelore.superclaim.gui.MainGuiProvider;
+import me.thelore.superclaim.inventory.InventoryManager;
+import me.thelore.superclaim.inventory.SmartInventory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class ClaimCommand implements CommandExecutor {
-    private final InventorySwitch inventorySwitch;
+    private final InventoryManager inventoryManager;
     public ClaimCommand() {
-        inventorySwitch = SuperClaim.getInstance().getInventorySwitch();
+        inventoryManager = SuperClaim.getInstance().getInventoryManager();
     }
 
     @Override
@@ -21,8 +23,18 @@ public class ClaimCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        inventorySwitch.switchInventory(player, InventoryType.MAIN_MENU);
+
+        SmartInventory gui = SmartInventory.builder()
+                .provider(new MainGuiProvider())
+                .id("mainGui")
+                .title("Claim")
+                .closeable(true)
+                .size(3, 9)
+                .build();
+
+        gui.open(player);
 
         return true;
     }
+
 }

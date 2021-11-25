@@ -3,10 +3,9 @@ package me.thelore.superclaim;
 import lombok.Getter;
 import me.thelore.superclaim.claim.handler.ClaimHandler;
 import me.thelore.superclaim.command.ClaimCommand;
-import me.thelore.superclaim.inventory.InventorySwitch;
+import me.thelore.superclaim.inventory.InventoryManager;
 import me.thelore.superclaim.task.SaveTask;
-import me.thelore.superclaim.ui.handler.MenuHandler;
-import me.thelore.superclaim.util.AreaSelector;
+import me.thelore.superclaim.util.selector.AreaSelector;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SuperClaim extends JavaPlugin {
@@ -17,23 +16,20 @@ public final class SuperClaim extends JavaPlugin {
     @Getter
     private ClaimHandler claimHandler;
     @Getter
-    private MenuHandler menuHandler;
+    private InventoryManager inventoryManager;
     @Getter
     private AreaSelector areaSelector;
-
-    @Getter
-    private InventorySwitch inventorySwitch;
 
     @Override
     public void onEnable() {
         instance = this;
 
         claimHandler = new ClaimHandler();
-        menuHandler = new MenuHandler();
+        inventoryManager = new InventoryManager(this);
         areaSelector = new AreaSelector();
 
-        inventorySwitch = new InventorySwitch();
 
+        inventoryManager.init();
         claimHandler.loadData();
         loadTasks();
         registerCommands();
