@@ -108,6 +108,8 @@ public interface SlotIterator {
                                 column--;
                             }
                             break;
+                        default:
+                            break;
                     }
                 }
             }
@@ -140,6 +142,8 @@ public interface SlotIterator {
 
                             if(row == 0)
                                 column++;
+                            break;
+                        default:
                             break;
                     }
                 }
