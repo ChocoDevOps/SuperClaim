@@ -1,16 +1,27 @@
 package me.thelore.superclaim.command;
 
+import me.thelore.superclaim.SuperClaim;
 import me.thelore.superclaim.chat.Messaging;
+import me.thelore.superclaim.claim.Claim;
+import me.thelore.superclaim.claim.handler.ClaimHandler;
+import me.thelore.superclaim.claim.permission.ClaimPermission;
+import me.thelore.superclaim.claim.player.ClaimPlayer;
 import me.thelore.superclaim.gui.provider.MainGuiProvider;
 import me.thelore.superclaim.inventory.SmartInventory;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class ClaimCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ClaimCommand implements CommandExecutor, Messaging {
+    private final ClaimHandler claimHandler;
     private SmartInventory gui;
     public ClaimCommand() {
+        this.claimHandler = SuperClaim.getInstance().getClaimHandler();
         initGui();
     }
 
@@ -22,7 +33,55 @@ public class ClaimCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        gui.open(player);
+        if(args.length == 0) {
+            gui.open(player);
+            return true;
+        }
+
+        if(args.length == 3) {
+            String arg = args[0];
+            String target = args[1];
+            String claim = args[2];
+
+            if(Bukkit.getPlayer(target) == null) {
+                getChatManager().sendMessage(sender, "target-offline");
+                return true;
+            }
+
+            Claim targetClaim = claimHandler.getClaim(player, claim);
+            if(targetClaim == null) {
+                getChatManager().sendMessage(sender, "no-claims");
+                return true;
+            }
+
+            List<ClaimPermission> defaultPermissions = new ArrayList<>();
+            defaultPermissions.add(ClaimPermission.VEHICLES);
+            defaultPermissions.add(ClaimPermission.CHEST_ACCESS);
+            defaultPermissions.add(ClaimPermission.REDSTONE_USE);
+            defaultPermissions.add(ClaimPermission.DOOR_USE);
+            defaultPermissions.add(ClaimPermission.CAN_BREAK);
+
+            ClaimPlayer claimPlayer = targetClaim.getClaimPlayer(target);
+            switch (arg.toLowerCase()) {
+                case "add":
+                    if(claimPlayer != null) {
+                        getChatManager().sendMessage(player, "already-in-team");
+                        return true;
+                    }
+                    ClaimPlayer toAdd = new ClaimPlayer(target, defaultPermissions);
+                    targetClaim.addPlayer(toAdd);
+                    break;
+                case "remove":
+                    if(claimPlayer == null) {
+                        getChatManager().sendMessage(player, "no-player-in-team");
+                        return true;
+                    }
+                    targetClaim.removePlayer(claimPlayer);
+                    break;
+                default:
+                    break;
+            }
+        }
 
         return true;
     }

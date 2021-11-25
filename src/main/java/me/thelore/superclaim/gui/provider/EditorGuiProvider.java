@@ -62,7 +62,7 @@ public class EditorGuiProvider implements InventoryProvider, Messaging {
         int remainingBlocks = ((int) settings.getValue("max-claim-blocks") - claim.getTerritory().getBlocks());
 
         contents.set(new SlotPos(1, 3), ClickableItem.of(ItemBuilder.build(Material.GOLDEN_SHOVEL, getChatManager().getMessage("redefine-claim-title"),
-                getChatManager().getMessage("remaining-blocks", new Placeholder("{remainingBlocks", remainingBlocks + ""))), e -> {
+                getChatManager().getMessage("remaining-blocks", new Placeholder("{remainingBlocks}", remainingBlocks + ""))), e -> {
             player.sendMessage(getChatManager().getMessage("select-new-area"));
             player.closeInventory();
             new AreaSelector().record(player, new AreaSelectorCallback() {

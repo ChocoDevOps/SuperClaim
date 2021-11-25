@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 public class Claim {
     @Getter
     private final ClaimIdentifier claimIdentifier;
-    @Getter @Setter
+    @Getter
+    @Setter
     private Territory territory;
     private List<ClaimPlayer> claimPlayerList;
 
@@ -26,11 +27,19 @@ public class Claim {
     }
 
     public void addPlayer(ClaimPlayer claimPlayer) {
-        if(getClaimPlayer(claimPlayer.getName()) != null) {
+        if (getClaimPlayer(claimPlayer.getName()) != null) {
             return;
         }
 
         claimPlayerList.add(claimPlayer);
+    }
+
+    public void removePlayer(ClaimPlayer claimPlayer) {
+        if (getClaimPlayer(claimPlayer.getName()) == null) {
+            return;
+        }
+
+        claimPlayerList.remove(claimPlayer);
     }
 
     public ClaimPlayer getClaimPlayer(String name) {

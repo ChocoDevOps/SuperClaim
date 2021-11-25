@@ -32,6 +32,10 @@ public class ClaimHandler {
         return claimList.stream().filter(c -> c.getClaimIdentifier().getId().equals(claimId)).findAny().orElse(null);
     }
 
+    public Claim getClaim(Player player, String name) {
+        return claimList.stream().filter(c -> c.getClaimIdentifier().getPlayerName().equals(player.getName()) && c.getClaimIdentifier().getDisplayName().equals(name)).findAny().orElse(null);
+    }
+
     public boolean removeClaim(Claim claim) {
         if(getClaim(claim.getClaimIdentifier().getId()) == null) {
             return false;
