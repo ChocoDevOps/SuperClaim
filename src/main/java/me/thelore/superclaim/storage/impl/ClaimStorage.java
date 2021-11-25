@@ -20,8 +20,6 @@ public class ClaimStorage extends Configuration {
     public void saveClaim(Claim claim) {
         FileConfiguration fileConfiguration = this.getConfiguration();
 
-        fileConfiguration.set("claims", null);
-
         String claimId = claim.getClaimIdentifier().getId();
         String basePath = "claims." + claimId;
 
