@@ -1,6 +1,5 @@
 package me.thelore.superclaim.command;
 
-import com.sun.tools.javac.Main;
 import me.thelore.superclaim.SuperClaim;
 import me.thelore.superclaim.gui.MainGuiProvider;
 import me.thelore.superclaim.inventory.InventoryManager;
@@ -11,9 +10,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class ClaimCommand implements CommandExecutor {
-    private final InventoryManager inventoryManager;
+    private SmartInventory gui;
     public ClaimCommand() {
-        inventoryManager = SuperClaim.getInstance().getInventoryManager();
+        initGui();
     }
 
     @Override
@@ -24,17 +23,19 @@ public class ClaimCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        SmartInventory gui = SmartInventory.builder()
+        gui.open(player);
+
+        return true;
+    }
+
+    private void initGui() {
+        gui = SmartInventory.builder()
                 .provider(new MainGuiProvider())
                 .id("mainGui")
                 .title("Claim")
                 .closeable(true)
                 .size(3, 9)
                 .build();
-
-        gui.open(player);
-
-        return true;
     }
 
 }
