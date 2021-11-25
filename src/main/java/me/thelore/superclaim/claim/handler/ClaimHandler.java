@@ -45,6 +45,10 @@ public class ClaimHandler {
         return (int) claimList.stream().filter(c -> c.getClaimIdentifier().getPlayerName().equals(name)).count();
     }
 
+    public List<Claim> getClaimList(String name) {
+        return claimList.stream().filter(c -> c.getClaimIdentifier().getPlayerName().equals(name)).collect(Collectors.toList());
+    }
+
     public void saveData() {
         claimList.forEach(claimStorage::saveClaim);
     }

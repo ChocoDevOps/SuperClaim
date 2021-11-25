@@ -8,3 +8,4 @@ commands:
   claim:
     usage: /claim
     description: Claim an area
+  test:

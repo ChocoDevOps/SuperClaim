@@ -6,4 +6,8 @@ public class LanguageConfiguration extends Configuration {
     public LanguageConfiguration() {
         super("language.yml", true);
     }
+
+    public String getMessage(String path) {
+        return getConfiguration().getString(path);
+    }
 }

@@ -1,8 +1,7 @@
 package me.thelore.superclaim.command;
 
-import me.thelore.superclaim.SuperClaim;
-import me.thelore.superclaim.gui.MainGuiProvider;
-import me.thelore.superclaim.inventory.InventoryManager;
+import me.thelore.superclaim.chat.Messaging;
+import me.thelore.superclaim.gui.provider.MainGuiProvider;
 import me.thelore.superclaim.inventory.SmartInventory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -23,4 +23,8 @@ public class ClaimPlayer {
         }
     }
 
+    public boolean hasPermission(ClaimPermission claimPermission) {
+        return claimPermissions.contains(claimPermission);
+    }
+
 }

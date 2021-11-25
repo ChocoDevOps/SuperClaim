@@ -20,6 +20,8 @@ public class ClaimStorage extends Configuration {
     public void saveClaim(Claim claim) {
         FileConfiguration fileConfiguration = this.getConfiguration();
 
+        fileConfiguration.set("claims", null);
+
         String claimId = claim.getClaimIdentifier().getId();
         String basePath = "claims." + claimId;
 
@@ -33,6 +35,9 @@ public class ClaimStorage extends Configuration {
         Location maxLocation = LocationUtil.getLocations(claim.getTerritory())[1];
 
         fileConfiguration.set(basePath + ".meta.area", LocationUtil.serialize(minLocation) + ":" + LocationUtil.serialize(maxLocation));
+
+        fileConfiguration.set(basePath + ".meta.displayName", claim.getClaimIdentifier().getDisplayName());
+
         saveConfig();
     }
 
@@ -42,7 +47,9 @@ public class ClaimStorage extends Configuration {
         for (String claimString : getConfiguration().getConfigurationSection("claims").getKeys(false)) {
             String basePath = "claims." + claimString;
 
+            String displayName = getConfiguration().getString(basePath + ".meta.displayName");
             ClaimIdentifier claimIdentifier = new ClaimIdentifier(claimString.split("#")[0], Integer.parseInt(claimString.split("#")[1]));
+            claimIdentifier.setDisplayName(displayName);
 
             String areaPoints = getConfiguration().getString(basePath + ".meta.area");
             String[] point = areaPoints.split(":");
@@ -55,17 +62,15 @@ public class ClaimStorage extends Configuration {
 
             Map<String, List<ClaimPermission>> claimPermission = new HashMap<>();
             for (String permission : getConfiguration().getConfigurationSection(basePath).getKeys(false)) {
-                if (permission.equalsIgnoreCase("meta")) {
-                    continue;
+                if(permission.equalsIgnoreCase("meta")) {
+                   continue;
                 }
 
-                String permissionPath = getConfiguration().getString(basePath + "." + permission);
-                for (String playerName : getConfiguration().getStringList(permissionPath)) {
+                for (String playerName : getConfiguration().getStringList(basePath + "." + permission)) {
                     if (!claimPermission.containsKey(playerName)) {
-                        claimPermission.put(playerName, Arrays.asList(ClaimPermission.valueOf(permission)));
-                    } else {
-                        claimPermission.get(playerName).add(ClaimPermission.valueOf(permission));
+                        claimPermission.put(playerName, new ArrayList<>());
                     }
+                    claimPermission.get(playerName).add(ClaimPermission.valueOf(permission));
                 }
             }
 

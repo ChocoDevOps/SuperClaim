@@ -1,6 +1,7 @@
 package me.thelore.superclaim.util.selector;
 
 import me.thelore.superclaim.SuperClaim;
+import me.thelore.superclaim.chat.Messaging;
 import me.thelore.superclaim.claim.Territory;
 import me.thelore.superclaim.claim.handler.ClaimHandler;
 import org.bukkit.Bukkit;
@@ -15,12 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AreaSelector implements Listener {
+public class AreaSelector implements Listener, Messaging {
     private final List<UUID> selecting;
 
     private final ClaimHandler claimHandler;
 
-    private SelectorCallback selectorCallback;
+    private AreaSelectorCallback selectorCallback;
 
     private Location p1;
     private Location p2;
@@ -33,7 +34,7 @@ public class AreaSelector implements Listener {
         Bukkit.getPluginManager().registerEvents(this, SuperClaim.getInstance());
     }
 
-    public void record(Player player, SelectorCallback selectorCallback) {
+    public void record(Player player, AreaSelectorCallback selectorCallback) {
         this.selecting.add(player.getUniqueId());
         this.selectorCallback = selectorCallback;
     }
@@ -45,12 +46,12 @@ public class AreaSelector implements Listener {
 
             if(event.getAction() == Action.LEFT_CLICK_BLOCK) {
                 p1 = event.getClickedBlock().getLocation();
-                event.getPlayer().sendMessage("Punto 1 selezionato");
+                getChatManager().getMessage("point-1-selected");
             }
 
             if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 p2 = event.getClickedBlock().getLocation();
-                event.getPlayer().sendMessage("Punto 2 selezionato");
+                getChatManager().getMessage("point-2-selected");
             }
 
             if(p1 != null && p2 != null) {

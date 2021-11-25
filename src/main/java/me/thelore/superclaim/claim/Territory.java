@@ -35,4 +35,11 @@ public class Territory {
                 y >= minY && y <= maxY &&
                 z >= minZ && z <= maxZ;
     }
+
+    public int getBlocks() {
+        int xDiff = (maxX - minX) + 1;
+        int zDiff = (maxZ - minZ) + 1;
+
+        return xDiff * zDiff;
+    }
 }

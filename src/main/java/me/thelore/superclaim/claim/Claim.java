@@ -1,6 +1,7 @@
 package me.thelore.superclaim.claim;
 
 import lombok.Getter;
+import lombok.Setter;
 import me.thelore.superclaim.claim.permission.ClaimPermission;
 import me.thelore.superclaim.claim.player.ClaimPlayer;
 
@@ -11,8 +12,8 @@ import java.util.stream.Collectors;
 public class Claim {
     @Getter
     private final ClaimIdentifier claimIdentifier;
-    @Getter
-    private final Territory territory;
+    @Getter @Setter
+    private Territory territory;
     private List<ClaimPlayer> claimPlayerList;
 
     public Claim(ClaimIdentifier claimIdentifier, Territory territory) {
@@ -38,5 +39,9 @@ public class Claim {
 
     public List<String> getPlayersWithPermission(ClaimPermission claimPermission) {
         return claimPlayerList.stream().filter(p -> p.getClaimPermissions().contains(claimPermission)).map(ClaimPlayer::getName).collect(Collectors.toList());
+    }
+
+    public List<ClaimPlayer> getPlayers() {
+        return claimPlayerList;
     }
 }
