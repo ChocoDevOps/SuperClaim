@@ -2,6 +2,7 @@ package me.thelore.superclaim.command;
 
 import me.thelore.superclaim.SuperClaim;
 import me.thelore.superclaim.chat.Messaging;
+import me.thelore.superclaim.chat.Placeholder;
 import me.thelore.superclaim.claim.Claim;
 import me.thelore.superclaim.claim.handler.ClaimHandler;
 import me.thelore.superclaim.claim.permission.ClaimPermission;
@@ -38,6 +39,10 @@ public class ClaimCommand implements CommandExecutor, Messaging {
             return true;
         }
 
+        if(args.length != 3) {
+            player.sendMessage("Usage: /claim <add/remove> [Player] [Claim name]");
+        }
+
         if(args.length == 3) {
             String arg = args[0];
             String target = args[1];
@@ -70,6 +75,9 @@ public class ClaimCommand implements CommandExecutor, Messaging {
                     }
                     ClaimPlayer toAdd = new ClaimPlayer(target, defaultPermissions);
                     targetClaim.addPlayer(toAdd);
+                    getChatManager().sendMessage(player, "player-added",
+                            new Placeholder("{targetPlayer}", target),
+                            new Placeholder("{targetClaim}", targetClaim.getClaimIdentifier().getDisplayName()));
                     break;
                 case "remove":
                     if(claimPlayer == null) {
@@ -77,6 +85,9 @@ public class ClaimCommand implements CommandExecutor, Messaging {
                         return true;
                     }
                     targetClaim.removePlayer(claimPlayer);
+                    getChatManager().sendMessage(player, "player-removed",
+                            new Placeholder("{targetPlayer}", target),
+                            new Placeholder("{targetClaim}", targetClaim.getClaimIdentifier().getDisplayName()));
                     break;
                 default:
                     break;

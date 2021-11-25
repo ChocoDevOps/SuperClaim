@@ -40,6 +40,7 @@ public class MainGuiProvider implements InventoryProvider, Messaging {
             new AreaSelector().record(player, new AreaSelectorCallback() {
                 @Override
                 public void onDone(Territory territory) {
+
                     if(territory.getBlocks() > (int) settings.getValue("max-claim-blocks")) {
                         getChatManager().sendMessage(player, "too-many-blocks");
                         return;

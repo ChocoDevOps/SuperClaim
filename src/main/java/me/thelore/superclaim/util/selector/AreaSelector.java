@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +47,12 @@ public class AreaSelector implements Listener, Messaging {
 
             if(event.getAction() == Action.LEFT_CLICK_BLOCK) {
                 p1 = event.getClickedBlock().getLocation();
-                getChatManager().getMessage("point-1-selected");
+                getChatManager().sendMessage(event.getPlayer(), "point-1-selected");
             }
 
             if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 p2 = event.getClickedBlock().getLocation();
-                getChatManager().getMessage("point-2-selected");
+                getChatManager().sendMessage(event.getPlayer(), "point-2-selected");
             }
 
             if(p1 != null && p2 != null) {

@@ -31,3 +31,5 @@ target-offline: '&aThe target player must be online in order to add it to your c
 no-claims: '&cYou have no claims with this name!'
 no-player-in-team: '&cThis player is not in your team!'
 already-in-team: '&cThis player is already in your team!'
+player-added: '&aYou successfully added {targetPlayer} to {targetClaim}'
+player-removed: '&aYou successfully removed {targetPlayer} from {targetClaim}'
