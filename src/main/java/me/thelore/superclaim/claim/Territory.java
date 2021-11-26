@@ -23,7 +23,6 @@ public class Territory {
 
     public boolean comprehend(Location location) {
         int x = location.getBlockX();
-        int y = location.getBlockY();
         int z = location.getBlockZ();
 
         Objects.requireNonNull(location.getWorld(), "World cannot be null");
@@ -32,7 +31,6 @@ public class Territory {
         }
 
         return x >= minX && x <= maxX &&
-                y >= minY && y <= maxY &&
                 z >= minZ && z <= maxZ;
     }
 

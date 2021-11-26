@@ -28,6 +28,8 @@ public class MainGuiProvider implements InventoryProvider, Messaging {
         //New claim Item
         ItemStack newClaim = ItemBuilder.build(Material.EMERALD, getChatManager().getMessage("new-claim-title"), getChatManager().getMessage("new-claim-lore"));
         contents.set(SlotPos.of(1, 2), ClickableItem.of(newClaim, event -> {
+            player.closeInventory();
+
             if (!event.getClick().isLeftClick()) {
                 return;
             }
