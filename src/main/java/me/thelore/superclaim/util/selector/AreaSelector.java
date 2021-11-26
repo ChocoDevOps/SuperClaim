@@ -1,11 +1,13 @@
 package me.thelore.superclaim.util.selector;
 
 import me.thelore.superclaim.SuperClaim;
+import me.thelore.superclaim.animation.BlockOverlay;
 import me.thelore.superclaim.chat.Messaging;
 import me.thelore.superclaim.claim.Territory;
 import me.thelore.superclaim.claim.handler.ClaimHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,6 +26,8 @@ public class AreaSelector implements Listener, Messaging {
 
     private AreaSelectorCallback selectorCallback;
 
+    private BlockOverlay blockOverlay;
+
     private Location p1;
     private Location p2;
 
@@ -38,6 +42,8 @@ public class AreaSelector implements Listener, Messaging {
     public void record(Player player, AreaSelectorCallback selectorCallback) {
         this.selecting.add(player.getUniqueId());
         this.selectorCallback = selectorCallback;
+        blockOverlay = new BlockOverlay(player, 0.50);
+        blockOverlay.start();
     }
 
     @EventHandler
@@ -47,11 +53,13 @@ public class AreaSelector implements Listener, Messaging {
 
             if(event.getAction() == Action.LEFT_CLICK_BLOCK) {
                 p1 = event.getClickedBlock().getLocation();
+                blockOverlay.setP1(p1);
                 getChatManager().sendMessage(event.getPlayer(), "point-1-selected");
             }
 
             if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 p2 = event.getClickedBlock().getLocation();
+                blockOverlay.setP2(p2);
                 getChatManager().sendMessage(event.getPlayer(), "point-2-selected");
             }
 
@@ -59,8 +67,10 @@ public class AreaSelector implements Listener, Messaging {
                 if(claimHandler.getClaim(p1) != null || claimHandler.getClaim(p2) != null) {
                     selectorCallback.onError();
                     selecting.remove(event.getPlayer().getUniqueId());
+                    blockOverlay.stop();
                     return;
                 }
+                blockOverlay.stop();
 
                 int xMin = Math.min(p1.getBlockX(), p2.getBlockX());
                 int yMin = Math.min(p1.getBlockY(), p2.getBlockY());
