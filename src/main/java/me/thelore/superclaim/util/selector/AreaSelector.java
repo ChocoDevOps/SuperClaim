@@ -42,8 +42,27 @@ public class AreaSelector implements Listener, Messaging {
     public void record(Player player, AreaSelectorCallback selectorCallback) {
         this.selecting.add(player.getUniqueId());
         this.selectorCallback = selectorCallback;
+
         blockOverlay = new BlockOverlay(player, 0.50);
         blockOverlay.start();
+    }
+
+    public void record(Player player, AreaSelectorCallback selectorCallback, Territory territory) {
+        this.selecting.add(player.getUniqueId());
+        this.selectorCallback = selectorCallback;
+
+        blockOverlay = new BlockOverlay(player, 0.50);
+        blockOverlay.start();
+
+        setOldTerritory(territory);
+    }
+
+    private void setOldTerritory(Territory territory) {
+        Location minLocation = new Location(Bukkit.getWorld(territory.getWorldName()), territory.getMinX(), territory.getMinY(), territory.getMinZ());
+        Location maxLocation = new Location(Bukkit.getWorld(territory.getWorldName()), territory.getMaxX(), territory.getMaxY(), territory.getMaxZ());
+
+        blockOverlay.setP1(minLocation);
+        blockOverlay.setP2(maxLocation);
     }
 
     @EventHandler

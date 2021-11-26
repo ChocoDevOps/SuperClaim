@@ -17,13 +17,15 @@ public class ClaimStorage extends Configuration {
         super("claims", true);
     }
 
-    public void saveClaim(Claim claim) {
+    public void saveClaim(Claim claim, boolean reset) {
         FileConfiguration fileConfiguration = this.getConfiguration();
+
+        if(reset) {
+            fileConfiguration.set("claims", null);
+        }
 
         String claimId = claim.getClaimIdentifier().getId();
         String basePath = "claims." + claimId;
-
-        fileConfiguration.set(basePath, null);
 
         Arrays.stream(ClaimPermission.values()).forEach(c -> {
             fileConfiguration.set(basePath + "." + c.name(), claim.getPlayersWithPermission(c));

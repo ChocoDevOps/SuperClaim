@@ -54,7 +54,11 @@ public class ClaimHandler {
     }
 
     public void saveData() {
-        claimList.forEach(claimStorage::saveClaim);
+        boolean toReset = true;
+        for(Claim claim : claimList) {
+            claimStorage.saveClaim(claim, toReset);
+            toReset = false;
+        }
     }
 
     public void loadData() {
