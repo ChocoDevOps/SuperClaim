@@ -48,7 +48,7 @@ public class MainGuiProvider implements InventoryProvider, Messaging {
                         return;
                     }
 
-                    if(claimHandler.getClaims(player.getName()) > (int) settings.getValue("max-claims-per-player")) {
+                    if(claimHandler.getClaims(player.getName()) >= (int) settings.getValue("max-claims-per-player")) {
                         getChatManager().sendMessage(player, "too-many-claims");
                         return;
                     }
