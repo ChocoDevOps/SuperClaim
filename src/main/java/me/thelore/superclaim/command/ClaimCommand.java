@@ -43,20 +43,6 @@ public class ClaimCommand implements CommandExecutor, Messaging {
             return true;
         }
 
-        if(args.length == 1) {
-            if(args[0].equalsIgnoreCase("map")) {
-                SmartInventory gui = SmartInventory.builder()
-                        .provider(new MapGuiProvider())
-                        .id("mapGui")
-                        .title("Claims map")
-                        .closeable(true)
-                        .size(5, 9)
-                        .build();
-                gui.open(player);
-                return true;
-            }
-        }
-
         if(args.length != 3) {
             player.sendMessage("Usage: /claim <add/remove> [Player] [Claim name]");
         }

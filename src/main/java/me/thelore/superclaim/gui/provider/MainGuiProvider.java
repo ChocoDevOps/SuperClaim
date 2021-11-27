@@ -8,6 +8,7 @@ import me.thelore.superclaim.claim.Territory;
 import me.thelore.superclaim.claim.handler.ClaimHandler;
 import me.thelore.superclaim.configuration.Settings;
 import me.thelore.superclaim.inventory.ClickableItem;
+import me.thelore.superclaim.inventory.SmartInventory;
 import me.thelore.superclaim.inventory.content.InventoryContents;
 import me.thelore.superclaim.inventory.content.InventoryProvider;
 import me.thelore.superclaim.inventory.content.SlotPos;
@@ -73,6 +74,11 @@ public class MainGuiProvider implements InventoryProvider, Messaging {
             }
 
             new SelectorGuiProvider(player);
+        }));
+
+        ItemStack claimMap = ItemBuilder.build(Material.PLAYER_HEAD, getChatManager().getMessage("claim-map-title"));
+        contents.set(new SlotPos(1, 4), ClickableItem.of(claimMap, e -> {
+            new MapGuiProvider(player);
         }));
     }
 }

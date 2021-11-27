@@ -15,6 +15,7 @@ empty-slot: '&aEmpty slot'
 locked-slot: '&cThis slot is locked'
 claimMap_item_title: '&aChunk {coord}'
 claimMap_item_lore: '&aClaim &b{claimName} &aof &b{claimOwner}'
+claim-map-title: '&aClaim map'
 
 choose-claim-borders: '&aPlease, choose claim borders'
 claim-created: '&aClaim successfully created!'

@@ -8,6 +8,7 @@ import me.thelore.superclaim.claim.handler.ClaimHandler;
 import me.thelore.superclaim.claim.player.ClaimPlayer;
 import me.thelore.superclaim.gui.ChunkSlot;
 import me.thelore.superclaim.inventory.ClickableItem;
+import me.thelore.superclaim.inventory.SmartInventory;
 import me.thelore.superclaim.inventory.content.InventoryContents;
 import me.thelore.superclaim.inventory.content.InventoryProvider;
 import me.thelore.superclaim.task.AsyncTask;
@@ -23,6 +24,19 @@ import java.util.HashSet;
 import java.util.List;
 
 public class MapGuiProvider implements InventoryProvider, Messaging {
+    private final SmartInventory gui;
+    public MapGuiProvider(Player player) {
+        gui = SmartInventory.builder()
+                .provider(this)
+                .id("mapGui")
+                .title("Claims map")
+                .closeable(true)
+                .size(5, 9)
+                .build();
+
+        open(player);
+    }
+
     @Override
     public void init(Player player, InventoryContents contents) {
         new AsyncTask(() -> {
@@ -83,5 +97,9 @@ public class MapGuiProvider implements InventoryProvider, Messaging {
             }
         }
         return chunksAroundPlayer;
+    }
+
+    private void open(Player player) {
+        gui.open(player);
     }
 }
