@@ -76,7 +76,7 @@ public class MainGuiProvider implements InventoryProvider, Messaging {
             new SelectorGuiProvider(player);
         }));
 
-        ItemStack claimMap = ItemBuilder.build(Material.PLAYER_HEAD, getChatManager().getMessage("claim-map-title"));
+        ItemStack claimMap = ItemBuilder.build(Material.FILLED_MAP, getChatManager().getMessage("claim-map-title"));
         contents.set(new SlotPos(1, 4), ClickableItem.of(claimMap, e -> {
             new MapGuiProvider(player);
         }));
