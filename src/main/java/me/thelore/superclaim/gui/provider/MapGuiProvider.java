@@ -5,6 +5,7 @@ import me.thelore.superclaim.chat.Messaging;
 import me.thelore.superclaim.chat.Placeholder;
 import me.thelore.superclaim.claim.Claim;
 import me.thelore.superclaim.claim.handler.ClaimHandler;
+import me.thelore.superclaim.claim.player.ClaimPlayer;
 import me.thelore.superclaim.gui.ChunkSlot;
 import me.thelore.superclaim.inventory.ClickableItem;
 import me.thelore.superclaim.inventory.content.InventoryContents;
@@ -49,11 +50,9 @@ public class MapGuiProvider implements InventoryProvider, Messaging {
                                 new Placeholder("{claimName}", claim.getClaimIdentifier().getDisplayName()),
                                 new Placeholder("{claimOwner}", claim.getClaimIdentifier().getPlayerName())));
 
-                        if (claim.getClaimPlayer(player.getName()) == null) {
-                            return;
-                        }
+                        ClaimPlayer claimPlayer = claim.getClaimPlayer(player.getName());
 
-                        if (claim.getClaimPlayer(player.getName()).getClaimPermissions().size() > 0) {
+                        if (claimPlayer != null && claimPlayer.getClaimPermissions().size() > 0) {
                             hasPermissions = true;
                         }
                     }

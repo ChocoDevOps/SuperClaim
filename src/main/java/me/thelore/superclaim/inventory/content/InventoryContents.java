@@ -38,6 +38,7 @@ public interface InventoryContents {
     InventoryContents add(ClickableItem item);
 
     InventoryContents fill(ClickableItem item);
+    InventoryContents fillIfEmpty(ClickableItem item);
     InventoryContents fillRow(int row, ClickableItem item);
     InventoryContents fillColumn(int column, ClickableItem item);
     InventoryContents fillBorders(ClickableItem item);
@@ -169,6 +170,17 @@ public interface InventoryContents {
             for(int row = 0; row < contents.length; row++)
                 for(int column = 0; column < contents[row].length; column++)
                     set(row, column, item);
+
+            return this;
+        }
+
+        @Override
+        public InventoryContents fillIfEmpty(ClickableItem item) {
+            for(int row = 0; row < contents.length; row++)
+                for(int column = 0; column < contents[row].length; column++)
+                    if(get(row, column).isPresent()) {
+                        set(row, column, item);
+                    }
 
             return this;
         }

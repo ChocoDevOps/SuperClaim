@@ -10,6 +10,7 @@ import me.thelore.superclaim.claim.player.ClaimPlayer;
 import me.thelore.superclaim.gui.provider.MainGuiProvider;
 import me.thelore.superclaim.gui.provider.MapGuiProvider;
 import me.thelore.superclaim.inventory.SmartInventory;
+import me.thelore.superclaim.task.AsyncTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
