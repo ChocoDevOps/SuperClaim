@@ -2,6 +2,7 @@ package me.thelore.superclaim.claim.handler;
 
 import me.thelore.superclaim.claim.Claim;
 import me.thelore.superclaim.storage.impl.ClaimStorage;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -25,7 +26,25 @@ public class ClaimHandler {
     }
 
     public Claim getClaim(Location location) {
-        return claimList.parallelStream().filter(c -> c.getTerritory().comprehend(location)).findAny().orElse(null);
+        return claimList.stream().filter(c -> c.getTerritory().comprehend(location)).findAny().orElse(null);
+    }
+
+    public List<Claim> getClaim(Chunk chunk) {
+        List<Claim> temp = new ArrayList<>();
+
+        for(Claim claim : claimList) {
+            for(int x = claim.getTerritory().getMinX(); x < claim.getTerritory().getMaxX(); x++) {
+                for(int z = claim.getTerritory().getMinZ(); z < claim.getTerritory().getMaxZ(); z++) {
+                    Location loc = new Location(chunk.getWorld(), x, 1, z);
+                    if(loc.getChunk().getX() == chunk.getX() && loc.getChunk().getZ() == chunk.getZ()) {
+                        if(!temp.contains(claim)) {
+                            temp.add(claim);
+                        }
+                    }
+                }
+            }
+        }
+        return temp;
     }
 
     public Claim getClaim(String claimId) {

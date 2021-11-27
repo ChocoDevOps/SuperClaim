@@ -13,6 +13,8 @@ edit-claim-title: '&aEdit claim'
 edit-claim-lore: '&bClick to edit a claim'
 empty-slot: '&aEmpty slot'
 locked-slot: '&cThis slot is locked'
+claimMap_item_title: '&aChunk {coord}'
+claimMap_item_lore: '&aClaim &b{claimName} &aof &b{claimOwner}'
 
 choose-claim-borders: '&aPlease, choose claim borders'
 claim-created: '&aClaim successfully created!'

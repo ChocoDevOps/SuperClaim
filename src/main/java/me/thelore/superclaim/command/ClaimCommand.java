@@ -8,8 +8,10 @@ import me.thelore.superclaim.claim.handler.ClaimHandler;
 import me.thelore.superclaim.claim.permission.ClaimPermission;
 import me.thelore.superclaim.claim.player.ClaimPlayer;
 import me.thelore.superclaim.gui.provider.MainGuiProvider;
+import me.thelore.superclaim.gui.provider.MapGuiProvider;
 import me.thelore.superclaim.inventory.SmartInventory;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,6 +19,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ClaimCommand implements CommandExecutor, Messaging {
     private final ClaimHandler claimHandler;
@@ -37,6 +40,20 @@ public class ClaimCommand implements CommandExecutor, Messaging {
         if(args.length == 0) {
             gui.open(player);
             return true;
+        }
+
+        if(args.length == 1) {
+            if(args[0].equalsIgnoreCase("map")) {
+                SmartInventory gui = SmartInventory.builder()
+                        .provider(new MapGuiProvider())
+                        .id("mapGui")
+                        .title("Claims map")
+                        .closeable(true)
+                        .size(5, 9)
+                        .build();
+                gui.open(player);
+                return true;
+            }
         }
 
         if(args.length != 3) {
