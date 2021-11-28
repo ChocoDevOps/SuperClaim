@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class DoorListener implements Listener {
 
@@ -28,6 +29,30 @@ public class DoorListener implements Listener {
         Claim claim = claimHandler.getClaim(location);
 
         if(claim == null) {
+            return;
+        }
+
+        ClaimPlayer claimPlayer = claim.getClaimPlayer(event.getPlayer().getName());
+        if(claimPlayer == null) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if(!claimPlayer.hasPermission(ClaimPermission.DOOR_USE)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void on(PlayerTeleportEvent event) {
+        ClaimHandler claimHandler = SuperClaim.getInstance().getClaimHandler();
+
+        Claim claim = claimHandler.getClaim(event.getTo());
+        if(claim == null) {
+            return;
+        }
+
+        if(!event.getCause().equals(PlayerTeleportEvent.TeleportCause.ENDER_PEARL)) {
             return;
         }
 
