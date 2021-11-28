@@ -65,10 +65,6 @@ public class EditorGuiProvider implements InventoryProvider, Messaging {
                 getChatManager().getMessage("remaining-blocks", new Placeholder("{remainingBlocks}", remainingBlocks + ""))), e -> {
             player.sendMessage(getChatManager().getMessage("select-new-area"));
             player.closeInventory();
-
-            Territory oldTerritory = claim.getTerritory();
-            claim.setTerritory(null);
-
             AreaSelector areaSelector = new AreaSelector();
             areaSelector.record(player, new AreaSelectorCallback() {
                 @Override
@@ -84,10 +80,9 @@ public class EditorGuiProvider implements InventoryProvider, Messaging {
 
                 @Override
                 public void onError() {
-                    claim.setTerritory(oldTerritory);
                     getChatManager().sendMessage(player, "claim-error");
                 }
-            }, oldTerritory);
+            }, claim.getTerritory());
         }));
 
         contents.set(new SlotPos(1, 5), ClickableItem.of(ItemBuilder.build(Material.PLAYER_HEAD, "§aPlayers permissions"), e -> {
