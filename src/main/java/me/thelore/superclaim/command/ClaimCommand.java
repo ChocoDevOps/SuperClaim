@@ -43,8 +43,38 @@ public class ClaimCommand implements CommandExecutor, Messaging {
             return true;
         }
 
+        if(args.length == 2) {
+            String arg = args[0];
+            String target = args[1];
+
+            Claim targetClaim = claimHandler.getClaim(player.getLocation());
+            switch (arg.toLowerCase()) {
+                case "add":
+                    if(targetClaim.getClaimPlayer(player.getName()).hasPermission(ClaimPermission.EDIT_CLAIM)) {
+                        ClaimPlayer toAdd = new ClaimPlayer(target, ClaimPermission.defaultPermissions());
+                        targetClaim.addPlayer(toAdd);
+                        getChatManager().sendMessage(player, "player-added",
+                                new Placeholder("{targetPlayer}", target),
+                                new Placeholder("{targetClaim}", targetClaim.getClaimIdentifier().getDisplayName()));
+                    }
+                    break;
+                case "remove":
+                    ClaimPlayer claimPlayer = targetClaim.getClaimPlayer(target);
+                    if(claimPlayer == null) {
+                        getChatManager().sendMessage(player, "no-player-in-team");
+                        return true;
+                    }
+                    targetClaim.removePlayer(claimPlayer);
+                    getChatManager().sendMessage(player, "player-removed",
+                            new Placeholder("{targetPlayer}", target),
+                            new Placeholder("{targetClaim}", targetClaim.getClaimIdentifier().getDisplayName()));
+                    break;
+            }
+            return true;
+        }
+
         if(args.length != 3) {
-            player.sendMessage("Usage: /claim <add/remove> [Player] [Claim name]");
+            player.sendMessage("Usage: /claim <add/remove> [Player] [Claim name (If not inside one)]");
         }
 
         if(args.length == 3) {
@@ -63,13 +93,6 @@ public class ClaimCommand implements CommandExecutor, Messaging {
                 return true;
             }
 
-            List<ClaimPermission> defaultPermissions = new ArrayList<>();
-            defaultPermissions.add(ClaimPermission.VEHICLES);
-            defaultPermissions.add(ClaimPermission.CHEST_ACCESS);
-            defaultPermissions.add(ClaimPermission.REDSTONE_USE);
-            defaultPermissions.add(ClaimPermission.DOOR_USE);
-            defaultPermissions.add(ClaimPermission.CAN_BREAK);
-
             ClaimPlayer claimPlayer = targetClaim.getClaimPlayer(target);
             switch (arg.toLowerCase()) {
                 case "add":
@@ -77,7 +100,7 @@ public class ClaimCommand implements CommandExecutor, Messaging {
                         getChatManager().sendMessage(player, "already-in-team");
                         return true;
                     }
-                    ClaimPlayer toAdd = new ClaimPlayer(target, defaultPermissions);
+                    ClaimPlayer toAdd = new ClaimPlayer(target, ClaimPermission.defaultPermissions());
                     targetClaim.addPlayer(toAdd);
                     getChatManager().sendMessage(player, "player-added",
                             new Placeholder("{targetPlayer}", target),
