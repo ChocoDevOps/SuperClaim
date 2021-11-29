@@ -50,24 +50,10 @@ public class ClaimCommand implements CommandExecutor, Messaging {
             Claim targetClaim = claimHandler.getClaim(player.getLocation());
             switch (arg.toLowerCase()) {
                 case "add":
-                    if(targetClaim.getClaimPlayer(player.getName()).hasPermission(ClaimPermission.EDIT_CLAIM)) {
-                        ClaimPlayer toAdd = new ClaimPlayer(target, ClaimPermission.defaultPermissions());
-                        targetClaim.addPlayer(toAdd);
-                        getChatManager().sendMessage(player, "player-added",
-                                new Placeholder("{targetPlayer}", target),
-                                new Placeholder("{targetClaim}", targetClaim.getClaimIdentifier().getDisplayName()));
-                    }
+                    addPlayer(player, target, targetClaim);
                     break;
                 case "remove":
-                    ClaimPlayer claimPlayer = targetClaim.getClaimPlayer(target);
-                    if(claimPlayer == null) {
-                        getChatManager().sendMessage(player, "no-player-in-team");
-                        return true;
-                    }
-                    targetClaim.removePlayer(claimPlayer);
-                    getChatManager().sendMessage(player, "player-removed",
-                            new Placeholder("{targetPlayer}", target),
-                            new Placeholder("{targetClaim}", targetClaim.getClaimIdentifier().getDisplayName()));
+                    removePlayer(targetClaim, player, target);
                     break;
             }
             return true;
@@ -100,21 +86,14 @@ public class ClaimCommand implements CommandExecutor, Messaging {
                         getChatManager().sendMessage(player, "already-in-team");
                         return true;
                     }
-                    ClaimPlayer toAdd = new ClaimPlayer(target, ClaimPermission.defaultPermissions());
-                    targetClaim.addPlayer(toAdd);
-                    getChatManager().sendMessage(player, "player-added",
-                            new Placeholder("{targetPlayer}", target),
-                            new Placeholder("{targetClaim}", targetClaim.getClaimIdentifier().getDisplayName()));
+                    addPlayer(player, target, targetClaim);
                     break;
                 case "remove":
                     if(claimPlayer == null) {
                         getChatManager().sendMessage(player, "no-player-in-team");
                         return true;
                     }
-                    targetClaim.removePlayer(claimPlayer);
-                    getChatManager().sendMessage(player, "player-removed",
-                            new Placeholder("{targetPlayer}", target),
-                            new Placeholder("{targetClaim}", targetClaim.getClaimIdentifier().getDisplayName()));
+                    removePlayer(targetClaim, player, target);
                     break;
                 default:
                     break;
@@ -132,6 +111,28 @@ public class ClaimCommand implements CommandExecutor, Messaging {
                 .closeable(true)
                 .size(3, 9)
                 .build();
+    }
+
+    private void removePlayer(Claim targetClaim, Player player, String target) {
+        ClaimPlayer claimPlayer = targetClaim.getClaimPlayer(target);
+        if(claimPlayer == null) {
+            getChatManager().sendMessage(player, "no-player-in-team");
+            return;
+        }
+        targetClaim.removePlayer(claimPlayer);
+        getChatManager().sendMessage(player, "player-removed",
+                new Placeholder("{targetPlayer}", target),
+                new Placeholder("{targetClaim}", targetClaim.getClaimIdentifier().getDisplayName()));
+    }
+
+    private void addPlayer(Player player, String target, Claim targetClaim) {
+        if(targetClaim.getClaimPlayer(player.getName()).hasPermission(ClaimPermission.EDIT_CLAIM)) {
+            ClaimPlayer toAdd = new ClaimPlayer(target, ClaimPermission.defaultPermissions());
+            targetClaim.addPlayer(toAdd);
+            getChatManager().sendMessage(player, "player-added",
+                    new Placeholder("{targetPlayer}", target),
+                    new Placeholder("{targetClaim}", targetClaim.getClaimIdentifier().getDisplayName()));
+        }
     }
 
 }
