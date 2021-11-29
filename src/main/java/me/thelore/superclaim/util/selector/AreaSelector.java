@@ -6,6 +6,7 @@ import me.thelore.superclaim.chat.Messaging;
 import me.thelore.superclaim.claim.Territory;
 import me.thelore.superclaim.claim.handler.ClaimHandler;
 import me.thelore.superclaim.claim.permission.ClaimPermission;
+import me.thelore.superclaim.claim.player.ClaimPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -86,8 +87,12 @@ public class AreaSelector implements Listener, Messaging {
 
             if(p1 != null && p2 != null) {
                 Player player = event.getPlayer();
-                if((claimHandler.getClaim(p1) != null && !claimHandler.getClaim(p1).getClaimPlayer(player.getName()).hasPermission(ClaimPermission.EDIT_CLAIM)) ||
-                        (claimHandler.getClaim(p2) != null && !claimHandler.getClaim(p2).getClaimPlayer(player.getName()).hasPermission(ClaimPermission.EDIT_CLAIM))) {
+
+                ClaimPlayer claimPlayer1 = claimHandler.getClaim(p1).getClaimPlayer(player.getName());
+                ClaimPlayer claimPlayer2 = claimHandler.getClaim(p1).getClaimPlayer(player.getName());
+
+                if((claimHandler.getClaim(p1) != null && claimPlayer1 != null && !claimPlayer1.hasPermission(ClaimPermission.EDIT_CLAIM)) ||
+                        (claimHandler.getClaim(p2) != null && claimPlayer2 != null &&!claimPlayer2.hasPermission(ClaimPermission.EDIT_CLAIM))) {
                     selectorCallback.onError();
                     selecting.remove(event.getPlayer().getUniqueId());
                     blockOverlay.stop();
