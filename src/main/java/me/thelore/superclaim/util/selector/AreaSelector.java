@@ -88,11 +88,8 @@ public class AreaSelector implements Listener, Messaging {
             if(p1 != null && p2 != null) {
                 Player player = event.getPlayer();
 
-                ClaimPlayer claimPlayer1 = claimHandler.getClaim(p1).getClaimPlayer(player.getName());
-                ClaimPlayer claimPlayer2 = claimHandler.getClaim(p1).getClaimPlayer(player.getName());
-
-                if((claimHandler.getClaim(p1) != null && claimPlayer1 != null && !claimPlayer1.hasPermission(ClaimPermission.EDIT_CLAIM)) ||
-                        (claimHandler.getClaim(p2) != null && claimPlayer2 != null &&!claimPlayer2.hasPermission(ClaimPermission.EDIT_CLAIM))) {
+                if((claimHandler.getClaim(p1) != null && claimHandler.getClaim(p1).getClaimPlayer(player.getName()) != null && !claimHandler.getClaim(p1).getClaimPlayer(player.getName()).hasPermission(ClaimPermission.EDIT_CLAIM)) ||
+                        (claimHandler.getClaim(p2) != null && claimHandler.getClaim(p2).getClaimPlayer(player.getName()) != null &&!claimHandler.getClaim(p2).getClaimPlayer(player.getName()).hasPermission(ClaimPermission.EDIT_CLAIM))) {
                     selectorCallback.onError();
                     selecting.remove(event.getPlayer().getUniqueId());
                     blockOverlay.stop();
