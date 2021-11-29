@@ -55,6 +55,8 @@ public class ClaimCommand implements CommandExecutor, Messaging {
                 case "remove":
                     removePlayer(targetClaim, player, target);
                     break;
+                default:
+                    break;
             }
             return true;
         }
