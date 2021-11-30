@@ -43,9 +43,17 @@ public class ClaimCommand implements CommandExecutor, Messaging {
             Claim targetClaim = claimHandler.getClaim(player.getLocation());
             switch (arg.toLowerCase()) {
                 case "add":
+                    if(targetClaim == null) {
+                        getChatManager().sendMessage(sender, "no-claims");
+                        return true;
+                    }
                     addPlayer(player, target, targetClaim);
                     break;
                 case "remove":
+                    if(targetClaim == null) {
+                        getChatManager().sendMessage(sender, "no-claims");
+                        return true;
+                    }
                     removePlayer(targetClaim, player, target);
                     break;
                 default:
