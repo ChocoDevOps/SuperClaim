@@ -81,7 +81,7 @@ public class PlaceBreakListener implements Listener {
     @EventHandler
     public void on(PlayerBucketEmptyEvent event) {
         ClaimHandler claimHandler = SuperClaim.getInstance().getClaimHandler();
-        Location location = event.getBlock().getLocation();
+        Location location = event.getBlockClicked().getLocation();
 
         Claim claim = claimHandler.getClaim(location);
         if(claim == null) {
