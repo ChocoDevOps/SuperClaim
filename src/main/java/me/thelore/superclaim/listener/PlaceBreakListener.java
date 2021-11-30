@@ -12,6 +12,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 
 public class PlaceBreakListener implements Listener {
 
@@ -80,6 +81,27 @@ public class PlaceBreakListener implements Listener {
 
     @EventHandler
     public void on(PlayerBucketEmptyEvent event) {
+        ClaimHandler claimHandler = SuperClaim.getInstance().getClaimHandler();
+        Location location = event.getBlockClicked().getLocation();
+
+        Claim claim = claimHandler.getClaim(location);
+        if(claim == null) {
+            return;
+        }
+
+        ClaimPlayer claimPlayer = claim.getClaimPlayer(event.getPlayer().getName());
+        if(claimPlayer == null) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if(!claimPlayer.hasPermission(ClaimPermission.CAN_BREAK)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void on(PlayerBucketFillEvent event) {
         ClaimHandler claimHandler = SuperClaim.getInstance().getClaimHandler();
         Location location = event.getBlockClicked().getLocation();
 
