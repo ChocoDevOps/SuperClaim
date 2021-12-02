@@ -1,7 +1,6 @@
 package me.thelore.superclaim.util;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 

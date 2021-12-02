@@ -1,6 +1,5 @@
 package me.thelore.superclaim.claim;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

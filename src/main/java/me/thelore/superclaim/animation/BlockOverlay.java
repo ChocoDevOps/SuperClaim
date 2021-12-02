@@ -2,14 +2,11 @@ package me.thelore.superclaim.animation;
 
 import com.google.common.collect.Lists;
 import me.thelore.superclaim.SuperClaim;
-import me.thelore.superclaim.task.AsyncTask;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
-import java.util.Locale;
 
 public class BlockOverlay {
     private BukkitTask scheduler;

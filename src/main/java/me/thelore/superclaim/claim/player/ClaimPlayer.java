@@ -5,7 +5,6 @@ import lombok.Getter;
 import me.thelore.superclaim.claim.permission.ClaimPermission;
 
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @AllArgsConstructor

@@ -1,19 +1,18 @@
 package me.thelore.superclaim.gui.provider;
 
-import me.thelore.superclaim.SuperClaim;
 import me.thelore.superclaim.chat.Messaging;
 import me.thelore.superclaim.claim.Claim;
 import me.thelore.superclaim.claim.player.ClaimPlayer;
-import me.thelore.superclaim.configuration.Settings;
 import me.thelore.superclaim.inventory.ClickableItem;
 import me.thelore.superclaim.inventory.SmartInventory;
-import me.thelore.superclaim.inventory.content.*;
+import me.thelore.superclaim.inventory.content.InventoryContents;
+import me.thelore.superclaim.inventory.content.InventoryProvider;
+import me.thelore.superclaim.inventory.content.Pagination;
 import me.thelore.superclaim.task.AsyncTask;
 import me.thelore.superclaim.util.GuiUtils;
 import me.thelore.superclaim.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;

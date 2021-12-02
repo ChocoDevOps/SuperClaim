@@ -5,14 +5,12 @@ import me.thelore.superclaim.claim.Claim;
 import me.thelore.superclaim.claim.handler.ClaimHandler;
 import me.thelore.superclaim.claim.permission.ClaimPermission;
 import me.thelore.superclaim.claim.player.ClaimPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.Locale;
 import java.util.Objects;
 
 public class RedstoneListener implements Listener {

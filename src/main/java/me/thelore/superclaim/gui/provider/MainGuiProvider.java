@@ -8,7 +8,6 @@ import me.thelore.superclaim.claim.Territory;
 import me.thelore.superclaim.claim.handler.ClaimHandler;
 import me.thelore.superclaim.configuration.Settings;
 import me.thelore.superclaim.inventory.ClickableItem;
-import me.thelore.superclaim.inventory.SmartInventory;
 import me.thelore.superclaim.inventory.content.InventoryContents;
 import me.thelore.superclaim.inventory.content.InventoryProvider;
 import me.thelore.superclaim.inventory.content.SlotPos;

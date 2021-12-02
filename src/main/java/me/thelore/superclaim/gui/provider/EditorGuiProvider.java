@@ -1,7 +1,6 @@
 package me.thelore.superclaim.gui.provider;
 
 import me.thelore.superclaim.SuperClaim;
-import me.thelore.superclaim.chat.ChatManager;
 import me.thelore.superclaim.chat.Messaging;
 import me.thelore.superclaim.chat.Placeholder;
 import me.thelore.superclaim.claim.Claim;
