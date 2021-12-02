@@ -12,7 +12,7 @@ import me.thelore.superclaim.inventory.SmartInventory;
 import me.thelore.superclaim.inventory.content.InventoryContents;
 import me.thelore.superclaim.inventory.content.InventoryProvider;
 import me.thelore.superclaim.task.AsyncTask;
-import me.thelore.superclaim.util.ItemBuilder;
+import me.thelore.superclaim.util.ItemHelper;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -52,7 +52,7 @@ public class MapGuiProvider implements InventoryProvider, Messaging {
                 String title = getChatManager().getMessage("claimMap_item_title", new Placeholder("{coord}", chunk.getChunk().getX() + " " + chunk.getChunk().getZ()));
 
                 if (claimHandler.getClaim(chunk.getChunk()).size() == 0) {
-                    contents.set(y, x, ClickableItem.empty(ItemBuilder.build(Material.WHITE_STAINED_GLASS_PANE, title)));
+                    contents.set(y, x, ClickableItem.empty(ItemHelper.build(Material.WHITE_STAINED_GLASS_PANE, title)));
                 } else {
                     List<Claim> claimList = claimHandler.getClaim(chunk.getChunk());
                     List<String> lore = new ArrayList<>();
@@ -72,9 +72,9 @@ public class MapGuiProvider implements InventoryProvider, Messaging {
                     }
 
                     if (hasPermissions) {
-                        contents.set(y, x, ClickableItem.empty(ItemBuilder.build(Material.YELLOW_STAINED_GLASS_PANE, title, lore)));
+                        contents.set(y, x, ClickableItem.empty(ItemHelper.build(Material.YELLOW_STAINED_GLASS_PANE, title, lore)));
                     } else {
-                        contents.set(y, x, ClickableItem.empty(ItemBuilder.build(Material.RED_STAINED_GLASS_PANE, title, lore)));
+                        contents.set(y, x, ClickableItem.empty(ItemHelper.build(Material.RED_STAINED_GLASS_PANE, title, lore)));
                     }
                 }
             }

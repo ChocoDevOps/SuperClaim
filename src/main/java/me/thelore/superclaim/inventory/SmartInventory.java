@@ -19,7 +19,8 @@ public class SmartInventory {
     private String id;
     private String title;
     private InventoryType type;
-    private int rows, columns;
+    private int rows;
+    private int columns;
     private boolean closeable;
 
     private InventoryProvider provider;
@@ -107,7 +108,8 @@ public class SmartInventory {
         private String id = "unknown";
         private String title = "";
         private InventoryType type = InventoryType.CHEST;
-        private int rows = 6, columns = 9;
+        private int rows = 6;
+        private int columns = 9;
         private boolean closeable = true;
 
         private InventoryManager manager;

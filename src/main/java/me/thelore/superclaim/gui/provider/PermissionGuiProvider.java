@@ -9,7 +9,7 @@ import me.thelore.superclaim.inventory.ClickableItem;
 import me.thelore.superclaim.inventory.SmartInventory;
 import me.thelore.superclaim.inventory.content.InventoryContents;
 import me.thelore.superclaim.inventory.content.InventoryProvider;
-import me.thelore.superclaim.util.ItemBuilder;
+import me.thelore.superclaim.util.ItemHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -37,10 +37,10 @@ public class PermissionGuiProvider implements InventoryProvider, Messaging {
 
     @Override
     public void init(Player player, InventoryContents contents) {
-        contents.fillBorders(ClickableItem.empty(ItemBuilder.build(Material.GRAY_STAINED_GLASS_PANE, " ")));
+        contents.fillBorders(ClickableItem.empty(ItemHelper.build(Material.GRAY_STAINED_GLASS_PANE, " ")));
 
         for(ClaimPermission claimPermission : ClaimPermission.values()) {
-            ItemStack item = ItemBuilder.build(claimPlayer.hasPermission(claimPermission) ? Material.GREEN_BANNER : Material.RED_BANNER, ChatColor.GREEN + claimPermission.name().toUpperCase().replace("_", " "));
+            ItemStack item = ItemHelper.build(claimPlayer.hasPermission(claimPermission) ? Material.GREEN_BANNER : Material.RED_BANNER, ChatColor.GREEN + claimPermission.name().toUpperCase().replace("_", " "));
             contents.add(ClickableItem.of(item, e -> {
                 if(claim.getClaimIdentifier().getPlayerName().equals(claimPlayer.getName())) {
                     getChatManager().sendMessage(player, "cant-edit-permissions");

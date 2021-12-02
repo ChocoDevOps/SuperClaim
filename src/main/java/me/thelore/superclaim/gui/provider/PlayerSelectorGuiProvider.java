@@ -10,7 +10,7 @@ import me.thelore.superclaim.inventory.content.InventoryProvider;
 import me.thelore.superclaim.inventory.content.Pagination;
 import me.thelore.superclaim.task.AsyncTask;
 import me.thelore.superclaim.util.GuiUtils;
-import me.thelore.superclaim.util.ItemBuilder;
+import me.thelore.superclaim.util.ItemHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -37,7 +37,7 @@ public class PlayerSelectorGuiProvider implements InventoryProvider, Messaging {
 
     @Override
     public void init(Player player, InventoryContents contents) {
-        contents.fillBorders(ClickableItem.empty(ItemBuilder.build(Material.GRAY_STAINED_GLASS_PANE, " ")));
+        contents.fillBorders(ClickableItem.empty(ItemHelper.build(Material.GRAY_STAINED_GLASS_PANE, " ")));
 
         Pagination pagination = contents.pagination();
 

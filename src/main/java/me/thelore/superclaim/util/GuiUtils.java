@@ -16,9 +16,9 @@ public class GuiUtils {
 
         pagination.addToIterator(contents.newIterator(SlotIterator.Type.HORIZONTAL, new SlotPos(1, 1)));
 
-        contents.set(2, 3, ClickableItem.of(ItemBuilder.build(Material.ARROW, "Previous page"),
+        contents.set(2, 3, ClickableItem.of(ItemHelper.build(Material.ARROW, "Previous page"),
                 e -> gui.open(player, pagination.previous().getPage())));
-        contents.set(2, 5, ClickableItem.of(ItemBuilder.build(Material.ARROW, "Next page"),
+        contents.set(2, 5, ClickableItem.of(ItemHelper.build(Material.ARROW, "Next page"),
                 e -> gui.open(player, pagination.next().getPage())));
     }
 }

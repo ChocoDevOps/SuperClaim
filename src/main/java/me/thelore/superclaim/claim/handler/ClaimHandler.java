@@ -34,10 +34,12 @@ public class ClaimHandler {
             for(int x = claim.getTerritory().getMinX(); x < claim.getTerritory().getMaxX(); x++) {
                 for(int z = claim.getTerritory().getMinZ(); z < claim.getTerritory().getMaxZ(); z++) {
                     Location loc = new Location(chunk.getWorld(), x, 1, z);
-                    if(loc.getChunk().getX() == chunk.getX() && loc.getChunk().getZ() == chunk.getZ()) {
-                        if(!temp.contains(claim)) {
-                            temp.add(claim);
-                        }
+                    if(!(loc.getChunk().getX() == chunk.getX() && loc.getChunk().getZ() == chunk.getZ())) {
+                        continue;
+                    }
+
+                    if(!temp.contains(claim)) {
+                        temp.add(claim);
                     }
                 }
             }

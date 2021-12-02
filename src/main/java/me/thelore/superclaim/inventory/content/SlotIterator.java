@@ -44,7 +44,8 @@ public interface SlotIterator {
         private Type type;
         private boolean started = false;
         private boolean allowOverride = true;
-        private int row, column;
+        private int row;
+        private int column;
 
         private Set<SlotPos> blacklisted = new HashSet<>();
 

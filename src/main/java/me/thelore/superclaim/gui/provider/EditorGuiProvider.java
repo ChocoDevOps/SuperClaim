@@ -12,7 +12,7 @@ import me.thelore.superclaim.inventory.SmartInventory;
 import me.thelore.superclaim.inventory.content.InventoryContents;
 import me.thelore.superclaim.inventory.content.InventoryProvider;
 import me.thelore.superclaim.inventory.content.SlotPos;
-import me.thelore.superclaim.util.ItemBuilder;
+import me.thelore.superclaim.util.ItemHelper;
 import me.thelore.superclaim.util.selector.AreaSelector;
 import me.thelore.superclaim.util.selector.AreaSelectorCallback;
 import me.thelore.superclaim.util.selector.NameSelector;
@@ -44,9 +44,9 @@ public class EditorGuiProvider implements InventoryProvider, Messaging {
 
     @Override
     public void init(Player player, InventoryContents contents) {
-        contents.fillBorders(ClickableItem.empty(ItemBuilder.build(Material.GRAY_STAINED_GLASS_PANE, " ")));
+        contents.fillBorders(ClickableItem.empty(ItemHelper.build(Material.GRAY_STAINED_GLASS_PANE, " ")));
 
-        contents.set(new SlotPos(1, 1), ClickableItem.of(ItemBuilder.build(Material.PAPER, "§aRename claim"), e -> {
+        contents.set(new SlotPos(1, 1), ClickableItem.of(ItemHelper.build(Material.PAPER, "§aRename claim"), e -> {
             player.closeInventory();
 
             new NameSelector().record(player, new NameSelectorCallback() {
@@ -60,7 +60,7 @@ public class EditorGuiProvider implements InventoryProvider, Messaging {
 
         int remainingBlocks = ((int) settings.getValue("max-claim-blocks") - claim.getTerritory().getBlocks());
 
-        contents.set(new SlotPos(1, 3), ClickableItem.of(ItemBuilder.build(Material.GOLDEN_SHOVEL, getChatManager().getMessage("redefine-claim-title"),
+        contents.set(new SlotPos(1, 3), ClickableItem.of(ItemHelper.build(Material.GOLDEN_SHOVEL, getChatManager().getMessage("redefine-claim-title"),
                 getChatManager().getMessage("remaining-blocks", new Placeholder("{remainingBlocks}", remainingBlocks + ""))), e -> {
             player.sendMessage(getChatManager().getMessage("select-new-area"));
             player.closeInventory();
@@ -84,11 +84,11 @@ public class EditorGuiProvider implements InventoryProvider, Messaging {
             }, claim.getTerritory());
         }));
 
-        contents.set(new SlotPos(1, 5), ClickableItem.of(ItemBuilder.build(Material.PLAYER_HEAD, "§aPlayers permissions"), e -> {
+        contents.set(new SlotPos(1, 5), ClickableItem.of(ItemHelper.build(Material.PLAYER_HEAD, "§aPlayers permissions"), e -> {
             new PlayerSelectorGuiProvider(player, claim);
         }));
 
-        contents.set(new SlotPos(1, 7), ClickableItem.of(ItemBuilder.build(Material.BARRIER, "§4Delete claim"), e -> {
+        contents.set(new SlotPos(1, 7), ClickableItem.of(ItemHelper.build(Material.BARRIER, "§4Delete claim"), e -> {
             player.closeInventory();
             SmartInventory gui = SmartInventory.builder()
                     .provider(new ConfirmGuiProvider(new ConfirmCallback() {

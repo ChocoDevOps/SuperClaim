@@ -11,7 +11,7 @@ import me.thelore.superclaim.inventory.ClickableItem;
 import me.thelore.superclaim.inventory.content.InventoryContents;
 import me.thelore.superclaim.inventory.content.InventoryProvider;
 import me.thelore.superclaim.inventory.content.SlotPos;
-import me.thelore.superclaim.util.ItemBuilder;
+import me.thelore.superclaim.util.ItemHelper;
 import me.thelore.superclaim.util.selector.AreaSelector;
 import me.thelore.superclaim.util.selector.AreaSelectorCallback;
 import org.bukkit.Material;
@@ -22,11 +22,11 @@ public class MainGuiProvider implements InventoryProvider, Messaging {
 
     @Override
     public void init(Player player, InventoryContents contents) {
-        ItemStack borderItem = ItemBuilder.build(Material.GRAY_STAINED_GLASS_PANE, " ");
+        ItemStack borderItem = ItemHelper.build(Material.GRAY_STAINED_GLASS_PANE, " ");
         contents.fillBorders(ClickableItem.empty(borderItem));
 
         //New claim Item
-        ItemStack newClaim = ItemBuilder.build(Material.EMERALD, getChatManager().getMessage("new-claim-title"), getChatManager().getMessage("new-claim-lore"));
+        ItemStack newClaim = ItemHelper.build(Material.EMERALD, getChatManager().getMessage("new-claim-title"), getChatManager().getMessage("new-claim-lore"));
         contents.set(SlotPos.of(1, 2), ClickableItem.of(newClaim, event -> {
             player.closeInventory();
 
@@ -66,7 +66,7 @@ public class MainGuiProvider implements InventoryProvider, Messaging {
         }));
 
         //Edit claim Item
-        ItemStack editClaim = ItemBuilder.build(Material.BLAZE_ROD, getChatManager().getMessage("edit-claim-title"), getChatManager().getMessage("edit-claim-lore"));
+        ItemStack editClaim = ItemHelper.build(Material.BLAZE_ROD, getChatManager().getMessage("edit-claim-title"), getChatManager().getMessage("edit-claim-lore"));
         contents.set(new SlotPos(1, 6), ClickableItem.of(editClaim, event -> {
             if (!event.getClick().isLeftClick()) {
                 return;
@@ -75,7 +75,7 @@ public class MainGuiProvider implements InventoryProvider, Messaging {
             new SelectorGuiProvider(player);
         }));
 
-        ItemStack claimMap = ItemBuilder.build(Material.FILLED_MAP, getChatManager().getMessage("claim-map-title"));
+        ItemStack claimMap = ItemHelper.build(Material.FILLED_MAP, getChatManager().getMessage("claim-map-title"));
         contents.set(new SlotPos(1, 4), ClickableItem.of(claimMap, e -> {
             new MapGuiProvider(player);
         }));

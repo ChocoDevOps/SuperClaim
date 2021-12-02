@@ -11,7 +11,7 @@ import me.thelore.superclaim.inventory.content.InventoryContents;
 import me.thelore.superclaim.inventory.content.InventoryProvider;
 import me.thelore.superclaim.inventory.content.Pagination;
 import me.thelore.superclaim.util.GuiUtils;
-import me.thelore.superclaim.util.ItemBuilder;
+import me.thelore.superclaim.util.ItemHelper;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +40,7 @@ public class SelectorGuiProvider implements InventoryProvider, Messaging {
 
     @Override
     public void init(Player player, InventoryContents contents) {
-        ItemStack borderItem = ItemBuilder.build(Material.GRAY_STAINED_GLASS_PANE, " ");
+        ItemStack borderItem = ItemHelper.build(Material.GRAY_STAINED_GLASS_PANE, " ");
         contents.fillBorders(ClickableItem.empty(borderItem));
 
         Pagination pagination = contents.pagination();
@@ -54,16 +54,16 @@ public class SelectorGuiProvider implements InventoryProvider, Messaging {
             AtomicReference<Claim> claimReference = new AtomicReference<>(null);
             if(i < owned) {
                 claimReference.set(claimHandler.getClaimList(player.getName()).get(i));
-                items[i] = ClickableItem.of(ItemBuilder.build(Material.FILLED_MAP, claimReference.get().getClaimIdentifier().getDisplayName()), event -> {
+                items[i] = ClickableItem.of(ItemHelper.build(Material.FILLED_MAP, claimReference.get().getClaimIdentifier().getDisplayName()), event -> {
                     Claim claim = claimReference.get();
 
                     new EditorGuiProvider(player, claim);
                 });
             } else {
                 if(i < maxClaims) {
-                    items[i] = ClickableItem.empty(ItemBuilder.build(Material.PAPER, getChatManager().getMessage("empty-slot")));
+                    items[i] = ClickableItem.empty(ItemHelper.build(Material.PAPER, getChatManager().getMessage("empty-slot")));
                 } else {
-                    items[i] = ClickableItem.empty(ItemBuilder.build(Material.BARRIER, getChatManager().getMessage("locked-slot")));
+                    items[i] = ClickableItem.empty(ItemHelper.build(Material.BARRIER, getChatManager().getMessage("locked-slot")));
                 }
             }
         }
